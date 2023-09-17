@@ -1,3 +1,4 @@
+using Game.player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,8 +17,6 @@ public class PlayerService : MonoSingletonGeneric<PlayerService>
     protected override void Awake()
     {
         base.Awake();
-        int tankIndex = UnityEngine.Random.Range(0, PlayerConfig.playerObjects.Length);
-        this.playerObject = PlayerConfig.tankObjects[tankIndex];
         CreateTank();
     }
 
@@ -25,6 +24,11 @@ public class PlayerService : MonoSingletonGeneric<PlayerService>
     {
         this.playerModel = new PlayerModel();
         this.playerView = GameObject.Instantiate<PlayerView>(playerPrefab);
-        this.playerController = new PlayerController();
+        this.playerController = new PlayerController(playerView,playerModel);
+    }
+
+    public PlayerView GetPlayer()
+    {
+        return this.playerView;
     }
 }
